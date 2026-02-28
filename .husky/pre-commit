@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+# Run lint-staged on the Next.js(raw chat api integrations demo) app
+cd web/apps/nextjs__raw_krabby_chat_api_integrations && bunx lint-staged
