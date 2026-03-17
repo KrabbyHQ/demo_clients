@@ -1,4 +1,11 @@
 {
+  "private": true,
+  "name": "demo_clients",
+  "version": "0.1.0",
+  "description": "Front-ends/clients for demo-ing integrations of the different Krabby real-time services implementations.",
+  "repository": "https://github.com/KrabbyHQ/demo_clients",
+  "homepage": "https://github.com/KrabbyHQ/demo_clients",
+  "license": "MIT",
   "dependencies": {},
   "devDependencies": {
     "@commitlint/cli": "^20.4.2",
