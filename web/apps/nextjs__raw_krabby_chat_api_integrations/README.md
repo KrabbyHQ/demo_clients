@@ -1,36 +1,143 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Krabby Next.js Demo — Raw Chat API Integration
+
+Welcome to the **Krabby Next.js Demo**! This application is a high-performance, real-time communication platform built using **Next.js 16** and **React 19**. It serves as a comprehensive reference implementation for developers looking to integrate Krabby's raw chat and calling APIs into modern web ecosystems.
+
+This demo isn't just a basic integration; it's a full-featured communication suite designed with a "UX-first" approach, providing a polished interface for messaging - including voice, and video calls.
+
+---
+
+## Interface Gallery
+
+The following screenshots demonstrate the core user flows and high-fidelity interface of the application.
+
+### Authentication Flow
+Start your journey with a secure and intuitive onboarding process.
+- **Sign In Page** (`img-1.png`): A minimalist authentication portal with real-time validation.
+  ![Sign In](./public/screenshots/img-1.png)
+- **Sign Up Page** (`img-2.png`): A comprehensive registration flow for new users, featuring a clean grid-based design.
+  ![Sign Up](./public/screenshots/img-2.png)
+
+### Messaging Experience
+Experience lightning-fast messaging with a layout optimized for productivity.
+- **Chat Dashboard** (`img-3.png`): The central hub showing all active conversations, unread message badges, and real-time online status indicators.
+  ![Chat Dashboard](./public/screenshots/img-3.png)
+- **Active Conversation** (`img-4.png`): A deep dive into the chat interface, featuring message history, real-time typing indicators, and a detailed contact information sidebar with shared media.
+  ![Active Chat](./public/screenshots/img-4.png)
+
+### Real-time Communication
+Integrated peer-to-peer calling powered by Krabby's specialized service implementations.
+- **Audio Call** (`img-5.png`): A distraction-free voice calling interface with high-fidelity wave animations.
+  ![Audio Call](./public/screenshots/img-5.png)
+- **Video Call** (`img-6.png`): A full-screen video communication experience with integrated device management for cameras and microphones.
+  ![Video Call](./public/screenshots/img-6.png)
+
+---
+
+## Core Features
+
+- **Instant Messaging**: Real-time text delivery with robust state synchronization.
+- **High-Quality Voice Calls**: Low-latency audio communication via peer-to-peer protocols.
+- **HD Video Conferencing**: Secure video calls with dynamic layout adjustments.
+- **Responsive Layout**: A fluid design system that scales seamlessly from mobile handsets to ultra-wide desktop monitors.
+- **State Persistence**: Global application state managed via Redux Toolkit (RTK) for a predictable data flow.
+- **Mock Data Layer**: Built-in mock services allowed for immediate testing and UI development without requiring a live backend.
+
+---
+
+## Tech Stack
+
+- **Framework**: [Next.js 16 (App Router)](https://nextjs.org/)
+- **Library**: [React 19](https://react.dev/)
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/) — Leveraging the latest JIT engine features.
+- **State Management**: [Redux Toolkit](https://redux-toolkit.js.org/)
+- **Package Manager**: [Bun](https://bun.sh/)
+- **Icons**: Custom-wrapped Lucide React components.
+
+---
 
 ## Getting Started
 
-First, run the development server:
+Follow these instructions to set up the development environment on your local machine.
+
+### 1. Prerequisites
+
+Ensure you have [Bun](https://bun.sh/) installed (version 1.1 or higher is recommended).
+```bash
+# Install Bun if you haven't already
+curl -fsSL https://bun.sh/install | bash
+```
+
+### 2. Installation
+
+Clone the repository and navigate to the project directory:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+cd demo_clients/web/apps/nextjs__raw_krabby_chat_api_integrations
+bun install
+```
+
+### 3. Environment Configuration
+
+The application requires environment variables for API communication. Copy the development sample to create your local environment file:
+
+```bash
+cp .env.development.sample .env.local
+```
+
+Open `.env.local` and configure the following (placeholders):
+- `NEXT_PUBLIC_API_URL`: The endpoint for your Krabby Chat API.
+- `NEXT_PUBLIC_WS_URL`: The WebSocket endpoint for real-time updates.
+
+### 4. Running the Application
+
+Launch the development server:
+
+```bash
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit [http://localhost:3000](http://localhost:3000) to view the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Development Scripts
 
-## Learn More
+The following scripts are available in the `package.json` for development and maintenance:
 
-To learn more about Next.js, take a look at the following resources:
+| Script | Command | Description |
+| :--- | :--- | :--- |
+| `dev` | `next dev` | Starts the development server with hot-reloading. |
+| `build` | `next build` | Compiles the application for production. |
+| `start` | `next start` | Starts the production server after building. |
+| `lint` | `bunx eslint .` | Runs ESLint to check for code quality issues. |
+| `format` | `bunx prettier . --write` | Formats the entire codebase using Prettier. |
+| `format:check` | `bunx prettier . --check` | Checks if files are properly formatted. |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Architecture
 
-## Deploy on Vercel
+- **`app/(routes)`**: Defines the application's page structure using Next.js file-based routing.
+    - **`(auth)`**: Authentication pages (Login/Sign-up).
+    - **`(chat)`**: Main messaging interface and the conversation list.
+    - **`[chatId]`**: Dynamic routes for specific conversations and call screens.
+- **`app/rtk-base`**: Contains the Redux store configuration and provider logic.
+- **`app/components`**: Shared UI components like `ChatHeader`, `Sidebar`, and `MessageInput`.
+- **`app/utils`**: Helper functions for formatting, font loading, and data manipulation.
+- **`public/screenshots`**: Visual assets for documentation.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Contributing and Support
+
+Contributions are what make the open-source community such an amazing place. If you're interested in improving this demo:
+
+1. Check out our [Main Contributing Guidelines](../../../../CONTRIBUTING.md).
+2. Report bugs or request features via the [Issues](../../../../issues) tab.
+3. Follow the [Code of Conduct](../../../../CODE_OF_CONDUCT.md) to maintain a healthy environment.
+
+## License
+
+This project is licensed under the **MIT License**. See the [LICENSE](../../../../LICENSE) file for the full text.
+
+Cheers!!! 🍻
