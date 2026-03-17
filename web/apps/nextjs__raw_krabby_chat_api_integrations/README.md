@@ -78,15 +78,7 @@ bun install
 
 ### 3. Environment Configuration
 
-The application requires environment variables for API communication. Copy the development sample to create your local environment file:
-
-```bash
-cp .env.development.sample .env.local
-```
-
-Open `.env.local` and configure the following (placeholders):
-- `NEXT_PUBLIC_API_URL`: The endpoint for your Krabby Chat API.
-- `NEXT_PUBLIC_WS_URL`: The WebSocket endpoint for real-time updates.
+...
 
 ### 4. Running the Application
 
