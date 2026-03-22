@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install Root Dependencies
+        run: bun install
+
+      - name: Install App Dependencies
+        run: bun install
+        working-directory: web/apps/nextjs__raw_krabby_chat_api_integrations
+
+      - name: Check Formatting
+        run: bun run format:check
+        working-directory: web/apps/nextjs__raw_krabby_chat_api_integrations
+
+      - name: Run Linter
+        run: bun run lint
+        working-directory: web/apps/nextjs__raw_krabby_chat_api_integrations
+
+      - name: Build Next.js App
+        run: bun run build
+        working-directory: web/apps/nextjs__raw_krabby_chat_api_integrations
