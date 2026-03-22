@@ -15,6 +15,7 @@ import {
   SettingsIcon,
 } from '../../../components/Icons';
 import MiniSoundStreamVisualizer from './components/MiniSoundStreamVisualizer';
+import RTCDebugOverlay from './components/RTCDebugOverlay';
 
 export default function VideoCallPage() {
   const params = useParams();
@@ -28,6 +29,7 @@ export default function VideoCallPage() {
   const [selectedMic, setSelectedMic] = useState<string>('');
   const [selectedCamera, setSelectedCamera] = useState<string>('');
   const [showSettings, setShowSettings] = useState(false);
+  const [peerConnection, setPeerConnection] = useState<RTCPeerConnection | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const selfVideoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
@@ -93,6 +95,9 @@ export default function VideoCallPage() {
 
   return (
     <div className="h-screen w-screen bg-black flex flex-col overflow-hidden text-white">
+      {/* RTC Debug Stats Overlay */}
+      <RTCDebugOverlay peerConnection={peerConnection} />
+
       {/* Top Overlay */}
       <div className="absolute top-0 inset-x-0 p-6 flex items-center justify-between bg-gradient-to-b from-black/60 to-transparent z-20">
         <Link
