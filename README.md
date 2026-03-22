@@ -7,7 +7,7 @@
 
 This [monorepo] repository contains all Front-ends/clients for demo-ing integrations of the different Krabby real-time services implementations.
 
-> As is the case with all Krabby implementations(both back-end and front-end), the `audio` and `video` call functionalities are the core focus, but for extra enhancements, each demo will include a robust chat application experience that matches those on platforms like WhatsApp,, Telegram and more.
+> As is the case with all Krabby implementations(both back-end and front-end), the `audio` and `video` call functionalities are the core focus, but for extra enhancements, each demo will feature a robust chat application experience that matches those on platforms like WhatsApp, Telegram and more.
 
 ## Main Demo Directories
 
@@ -16,6 +16,19 @@ This [monorepo] repository contains all Front-ends/clients for demo-ing integrat
   Currently available builds.
 
     1. [Raw Krabby chat API integrations demo with `NextJs`](./web/apps/nextjs__raw_krabby_chat_api_integrations).
+
+       ![Next.js Demo - Sign In](./web/apps/nextjs__raw_krabby_chat_api_integrations/public/screenshots/img-1.png)
+    
+       ![Next.js Demo - Sign Up](./web/apps/nextjs__raw_krabby_chat_api_integrations/public/screenshots/img-2.png)
+    
+       ![Next.js Demo - Chat List](./web/apps/nextjs__raw_krabby_chat_api_integrations/public/screenshots/img-3.png)
+    
+       ![Next.js Demo - Active Chat](./web/apps/nextjs__raw_krabby_chat_api_integrations/public/screenshots/img-4.png)
+    
+       ![Next.js Demo - Audio Call](./web/apps/nextjs__raw_krabby_chat_api_integrations/public/screenshots/img-5.png)
+    
+       ![Next.js Demo - Video Call](./web/apps/nextjs__raw_krabby_chat_api_integrations/public/screenshots/img-6.png)
+
     2. ...
     3. ...
     

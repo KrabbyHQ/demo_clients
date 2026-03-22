@@ -11,24 +11,39 @@ This demo isn't just a basic integration; it's a full-featured communication sui
 The following screenshots demonstrate the core user flows and high-fidelity interface of the application.
 
 ### Authentication Flow
+
 Start your journey with a secure and intuitive onboarding process.
+
 - **Sign In Page** (`img-1.png`): A minimalist authentication portal with real-time validation.
+
   ![Sign In](./public/screenshots/img-1.png)
+
 - **Sign Up Page** (`img-2.png`): A comprehensive registration flow for new users, featuring a clean grid-based design.
+
   ![Sign Up](./public/screenshots/img-2.png)
 
 ### Messaging Experience
+
 Experience lightning-fast messaging with a layout optimized for productivity.
+
 - **Chat Dashboard** (`img-3.png`): The central hub showing all active conversations, unread message badges, and real-time online status indicators.
+
   ![Chat Dashboard](./public/screenshots/img-3.png)
+
 - **Active Conversation** (`img-4.png`): A deep dive into the chat interface, featuring message history, real-time typing indicators, and a detailed contact information sidebar with shared media.
+
   ![Active Chat](./public/screenshots/img-4.png)
 
 ### Real-time Communication
+
 Integrated peer-to-peer calling powered by Krabby's specialized service implementations.
+
 - **Audio Call** (`img-5.png`): A distraction-free voice calling interface with high-fidelity wave animations.
+
   ![Audio Call](./public/screenshots/img-5.png)
+
 - **Video Call** (`img-6.png`): A full-screen video communication experience with integrated device management for cameras and microphones.
+
   ![Video Call](./public/screenshots/img-6.png)
 
 ---
