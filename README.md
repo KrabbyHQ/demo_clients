@@ -7,7 +7,7 @@
 
 This [monorepo] repository contains all Front-ends/clients for demo-ing integrations of the different Krabby real-time services implementations.
 
-> As is the case with all Krabby implementations(both back-end and front-end), the `audio` and `video` call functionalities are the core focus, but for extra enhancements, each demo will feature a robust chat application experience that matches those on platforms like WhatsApp, Telegram and more.
+> As is the case with all Krabby implementations, the `audio` and `video` call functionalities are the core focus. But for extra enhancements, each demo will feature a robust chat application experience that matches those on platforms like WhatsApp, Telegram and more.
 
 ## Main Demo Directories
 
