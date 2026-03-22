@@ -53,6 +53,7 @@ Integrated peer-to-peer calling powered by Krabby's specialized service implemen
 - **Instant Messaging**: Real-time text delivery with robust state synchronization.
 - **High-Quality Voice Calls**: Low-latency audio communication via peer-to-peer protocols.
 - **HD Video Conferencing**: Secure video calls with dynamic layout adjustments.
+- **RTC Quality/Debug Dashboard**: A high-fidelity modal for monitoring real-time communication performance, including bitrate, latency, packet loss, and jitter.
 - **Responsive Layout**: A fluid design system that scales seamlessly from mobile handsets to ultra-wide desktop monitors.
 - **State Persistence**: Global application state managed via Redux Toolkit (RTK) for a predictable data flow.
 - **Mock Data Layer**: Built-in mock services allowed for immediate testing and UI development without requiring a live backend.
@@ -77,6 +78,7 @@ Follow these instructions to set up the development environment on your local ma
 ### 1. Prerequisites
 
 Ensure you have [Bun](https://bun.sh/) installed (version 1.1 or higher is recommended).
+
 ```bash
 # Install Bun if you haven't already
 curl -fsSL https://bun.sh/install | bash
@@ -111,23 +113,23 @@ Visit [http://localhost:3000](http://localhost:3000) to view the application.
 
 The following scripts are available in the `package.json` for development and maintenance:
 
-| Script | Command | Description |
-| :--- | :--- | :--- |
-| `dev` | `next dev` | Starts the development server with hot-reloading. |
-| `build` | `next build` | Compiles the application for production. |
-| `start` | `next start` | Starts the production server after building. |
-| `lint` | `bunx eslint .` | Runs ESLint to check for code quality issues. |
-| `format` | `bunx prettier . --write` | Formats the entire codebase using Prettier. |
-| `format:check` | `bunx prettier . --check` | Checks if files are properly formatted. |
+| Script         | Command                   | Description                                       |
+| :------------- | :------------------------ | :------------------------------------------------ |
+| `dev`          | `next dev`                | Starts the development server with hot-reloading. |
+| `build`        | `next build`              | Compiles the application for production.          |
+| `start`        | `next start`              | Starts the production server after building.      |
+| `lint`         | `bunx eslint .`           | Runs ESLint to check for code quality issues.     |
+| `format`       | `bunx prettier . --write` | Formats the entire codebase using Prettier.       |
+| `format:check` | `bunx prettier . --check` | Checks if files are properly formatted.           |
 
 ---
 
 ## Project Architecture
 
 - **`app/(routes)`**: Defines the application's page structure using Next.js file-based routing.
-    - **`(auth)`**: Authentication pages (Login/Sign-up).
-    - **`(chat)`**: Main messaging interface and the conversation list.
-    - **`[chatId]`**: Dynamic routes for specific conversations and call screens.
+  - **`(auth)`**: Authentication pages (Login/Sign-up).
+  - **`(chat)`**: Main messaging interface and the conversation list.
+  - **`[chatId]`**: Dynamic routes for specific conversations and call screens.
 - **`app/rtk-base`**: Contains the Redux store configuration and provider logic.
 - **`app/components`**: Shared UI components like `ChatHeader`, `Sidebar`, and `MessageInput`.
 - **`app/utils`**: Helper functions for formatting, font loading, and data manipulation.
