@@ -11,7 +11,7 @@ This [monorepo] repository contains all Front-ends/clients for demo-ing integrat
 
 ## Main Demo Directories
 
-- `web`: For all web based demos.
+- `web`: For all web-based demos.
 
   Currently available builds.
 
@@ -40,7 +40,7 @@ This [monorepo] repository contains all Front-ends/clients for demo-ing integrat
     2. ...
     3. ...
     
-- `mobile`: For all mobile applications (in view
+- `mobile`: For all mobile applications (in view)
 
   Currently available builds.
   
