@@ -106,3 +106,19 @@ export const mockMessages = [
   },
   { id: 'm9', from: 'them', text: 'Are you free to hop on a call later?', time: '10:42 AM' },
 ];
+
+export const mockUsers = [
+  { id: 'u1', name: 'Alice Smith', online: true },
+  { id: 'u2', name: 'Bob Johnson', online: false },
+  { id: 'u3', name: 'Charlie Brown', online: true },
+  { id: 'u4', name: 'David Wilson', online: false },
+  { id: 'u5', name: 'Eva Garcia', online: true },
+  { id: 'u6', name: 'Frank Miller', online: false },
+  { id: 'u7', name: 'Grace Lee', online: true },
+  { id: 'u8', name: 'Alice Johnson', online: true },
+  { id: 'u9', name: 'Bob Smith', online: false },
+  { id: 'u10', name: 'Charlie Davis', online: true },
+  { id: 'u11', name: 'Diana Prince', online: true },
+  { id: 'u12', name: 'Ethan Hunt', online: false },
+  { id: 'u13', name: 'Fiona Gallagher', online: true },
+];

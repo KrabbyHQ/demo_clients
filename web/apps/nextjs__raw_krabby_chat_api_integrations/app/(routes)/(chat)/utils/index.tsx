@@ -1,6 +1,9 @@
 export const getInitials = (name: string) => {
+  if (!name) return '';
   return name
-    .split(' ')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean)
     .map((n) => n[0])
     .join('')
     .toUpperCase()
@@ -8,7 +11,8 @@ export const getInitials = (name: string) => {
 };
 
 export const formatTime = (s: number) => {
-  const mins = Math.floor(s / 60);
-  const secs = s % 60;
-  return '' + mins + ':' + secs.toString().padStart(2, '0');
+  const total = Math.floor(Math.abs(s));
+  const mins = Math.floor(total / 60);
+  const secs = total % 60;
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
 };
