@@ -56,6 +56,14 @@ To get started with any of the demo clients:
 2. Navigate to the desired client category (e.g., `web/apps`).
 3. Then Follow the specific instructions in each app's `README.md`.
 
+## Data Modelling Reference
+
+The project contains an SQL reference to the complete `Krabby chat API`. The SQL reference is defined in the following SQL schema file:
+
+- [`/docs/reference/data_model/schema.sql`](./docs/reference/data_model/schema.sql)
+
+This schema is to serve as a guide/helper for structuring client/front-end data. E.g. within Redux Toolkit slices and for other client-side state management chores. Please refer to it to ensure type safety and consistency.
+
 ## Continuous Integration (CI)
 
 This project has a CI setup configured via GitHub Actions. If you fork the repository and want to verify the CI builds on your fork, you may need to add repository secrets to your fork's settings if any tests or deployment flows require them.
