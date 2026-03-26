@@ -37,7 +37,7 @@ export default function AudioCallPage() {
   }, []);
 
   useEffect(() => {
-    async function getDevices() {
+    const getDevices = async () => {
       try {
         const allDevices = await navigator.mediaDevices.enumerateDevices();
         const audioIn = allDevices.filter((d) => d.kind === 'audioinput');
@@ -48,15 +48,19 @@ export default function AudioCallPage() {
       } catch (err) {
         console.error('Error enumerating devices:', err);
       }
-    }
+    };
     getDevices();
-  }, [selectedDevice]);
+    navigator.mediaDevices.addEventListener('devicechange', getDevices);
+    return () => navigator.mediaDevices.removeEventListener('devicechange', getDevices);
+  }, []); // Only run once on mount, selectedDevice check is sufficient inside.
 
   useEffect(() => {
+    let canceled = false;
     const cleanup = () => {
+      canceled = true;
       if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
       if (audioContextRef.current) {
-        audioContextRef.current.close();
+        audioContextRef.current.close().catch(() => {});
         audioContextRef.current = null;
       }
       if (streamRef.current) {
@@ -75,12 +79,25 @@ export default function AudioCallPage() {
         const stream = await navigator.mediaDevices.getUserMedia({
           audio: selectedDevice ? { deviceId: { exact: selectedDevice } } : true,
         });
+
+        if (canceled) {
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+
         streamRef.current = stream;
         const AudioContextClass =
           window.AudioContext ||
           (window as unknown as Window & { webkitAudioContext: typeof AudioContext })
             .webkitAudioContext;
         const audioContext = new AudioContextClass();
+
+        if (canceled) {
+          audioContext.close().catch(() => {});
+          stream.getTracks().forEach((t) => t.stop());
+          return;
+        }
+
         const analyzer = audioContext.createAnalyser();
         const source = audioContext.createMediaStreamSource(stream);
         source.connect(analyzer);
@@ -93,7 +110,8 @@ export default function AudioCallPage() {
         dataArrayRef.current = dataArray;
 
         const draw = () => {
-          if (!canvasRef.current || !analyzerRef.current || !dataArrayRef.current) return;
+          if (canceled || !canvasRef.current || !analyzerRef.current || !dataArrayRef.current)
+            return;
           animationFrameRef.current = requestAnimationFrame(draw);
           analyzerRef.current.getByteFrequencyData(
             dataArrayRef.current as unknown as Uint8Array<ArrayBuffer>,
@@ -181,7 +199,7 @@ export default function AudioCallPage() {
           </button>
           {showSettings && (
             <div className="absolute right-0 mt-2 w-64 bg-white border border-black/10 shadow-xl z-50 p-4">
-              <p className="text-[10px] font-bold tracking-[0.1em] uppercase text-black/40 mb-3">
+              <p className="text-[10px] font-bold tracking-widest uppercase text-black/40 mb-3">
                 Microphone
               </p>
               <div className="space-y-2">

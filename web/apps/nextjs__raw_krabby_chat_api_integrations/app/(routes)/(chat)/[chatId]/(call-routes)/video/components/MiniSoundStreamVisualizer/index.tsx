@@ -4,12 +4,12 @@ import { useEffect, useRef } from 'react';
 
 function MiniSoundStreamVisualizer({
   muted,
-  selectedMic,
+  stream,
   levels,
   setLevels,
 }: {
   muted: boolean;
-  selectedMic: string;
+  stream: MediaStream | null;
   levels: number[];
   setLevels: React.Dispatch<React.SetStateAction<number[]>>;
 }) {
@@ -25,10 +25,7 @@ function MiniSoundStreamVisualizer({
         audioContextRef.current.close();
         audioContextRef.current = null;
       }
-      if (streamRef.current) {
-        streamRef.current.getTracks().forEach((t) => t.stop());
-        streamRef.current = null;
-      }
+      streamRef.current = null;
     };
 
     if (muted) {
@@ -38,10 +35,8 @@ function MiniSoundStreamVisualizer({
     }
 
     async function setupVisualizer() {
+      if (!stream) return;
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          audio: selectedMic ? { deviceId: { exact: selectedMic } } : true,
-        });
         streamRef.current = stream;
 
         const AudioContextClass =
@@ -79,7 +74,7 @@ function MiniSoundStreamVisualizer({
     setupVisualizer();
 
     return cleanup;
-  }, [muted, selectedMic, setLevels]);
+  }, [muted, stream, setLevels]);
 
   return (
     <div className="flex items-end gap-0.5 h-3 w-4">

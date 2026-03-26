@@ -1,4 +1,9 @@
 import React from 'react';
+import { SVGProps } from 'react';
+
+type PlusIconProps = {
+  size?: number;
+} & SVGProps<SVGSVGElement>;
 
 export const ChatsIcon = () => (
   <svg
@@ -97,7 +102,7 @@ export const ProfileIcon = () => (
   </svg>
 );
 
-export const PlusIcon = ({ size = 15 }: { size?: number }) => (
+export const PlusIcon = ({ size = 16, ...props }: PlusIconProps) => (
   <svg
     width={size}
     height={size}
@@ -107,6 +112,7 @@ export const PlusIcon = ({ size = 15 }: { size?: number }) => (
     strokeWidth="1.8"
     strokeLinecap="round"
     strokeLinejoin="round"
+    {...props}
   >
     <line x1="12" y1="5" x2="12" y2="19" />
     <line x1="5" y1="12" x2="19" y2="12" />

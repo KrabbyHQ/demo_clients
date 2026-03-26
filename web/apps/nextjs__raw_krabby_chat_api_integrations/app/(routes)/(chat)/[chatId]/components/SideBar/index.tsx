@@ -6,7 +6,7 @@ import {
   ArchiveIcon,
   SettingsIcon,
   ProfileIcon,
-} from '../../../../../../trash/Icons';
+} from '../../../components/Icons';
 
 function Sidebar() {
   return (
@@ -18,27 +18,31 @@ function Sidebar() {
       </Link>
 
       <nav className="flex flex-col items-center gap-1 flex-1">
-        <button
+        <Link
+          href="/"
           title="Chats"
           className="w-10 h-10 flex items-center justify-center bg-black text-white transition-colors duration-150 cursor-pointer"
         >
           <ChatsIcon />
-        </button>
+        </Link>
         <button
           title="Contacts"
-          className="w-10 h-10 flex items-center justify-center text-black/35 hover:text-black hover:bg-black/5 transition-colors duration-150 cursor-pointer"
+          aria-disabled="true"
+          className="w-10 h-10 flex items-center justify-center text-black/35 cursor-default transition-colors duration-150"
         >
           <ContactsIcon />
         </button>
         <button
           title="Calls"
-          className="w-10 h-10 flex items-center justify-center text-black/35 hover:text-black hover:bg-black/5 transition-colors duration-150 cursor-pointer"
+          aria-disabled="true"
+          className="w-10 h-10 flex items-center justify-center text-black/35 cursor-default transition-colors duration-150"
         >
           <CallsIcon />
         </button>
         <button
           title="Archived"
-          className="w-10 h-10 flex items-center justify-center text-black/35 hover:text-black hover:bg-black/5 transition-colors duration-150 cursor-pointer"
+          aria-disabled="true"
+          className="w-10 h-10 flex items-center justify-center text-black/35 cursor-default transition-colors duration-150"
         >
           <ArchiveIcon />
         </button>
@@ -47,13 +51,15 @@ function Sidebar() {
       <div className="flex flex-col items-center gap-1">
         <button
           title="Settings"
-          className="w-10 h-10 flex items-center justify-center text-black/35 hover:text-black hover:bg-black/5 transition-colors duration-150 cursor-pointer"
+          aria-disabled="true"
+          className="w-10 h-10 flex items-center justify-center text-black/35 cursor-default transition-colors duration-150"
         >
           <SettingsIcon />
         </button>
         <button
           title="Profile"
-          className="w-10 h-10 flex items-center justify-center text-black/35 hover:text-black hover:bg-black/5 transition-colors duration-150 cursor-pointer"
+          aria-disabled="true"
+          className="w-10 h-10 flex items-center justify-center text-black/35 cursor-default transition-colors duration-150"
         >
           <ProfileIcon />
         </button>

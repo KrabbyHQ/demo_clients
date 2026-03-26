@@ -1,10 +1,4 @@
-import {
-  BackIcon,
-  PhoneIcon,
-  VideoIcon,
-  SearchIcon,
-  DotsIcon,
-} from '../../../../../../trash/Icons';
+import { BackIcon, PhoneIcon, VideoIcon, SearchIcon, DotsIcon } from '../../../components/Icons';
 import Link from 'next/link';
 import { mockChats } from '../../../mocks';
 import { getInitials } from '../../../utils';
