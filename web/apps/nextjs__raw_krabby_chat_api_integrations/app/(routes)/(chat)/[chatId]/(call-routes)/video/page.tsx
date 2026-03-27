@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { mockChats } from '../../../mocks';
 import { getInitials, formatTime } from '../../../utils';

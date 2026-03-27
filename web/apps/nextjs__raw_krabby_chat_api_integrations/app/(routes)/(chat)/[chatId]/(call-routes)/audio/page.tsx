@@ -52,7 +52,7 @@ export default function AudioCallPage() {
     getDevices();
     navigator.mediaDevices.addEventListener('devicechange', getDevices);
     return () => navigator.mediaDevices.removeEventListener('devicechange', getDevices);
-  }, []); // Only run once on mount, selectedDevice check is sufficient inside.
+  }, [selectedDevice]); // Only run once on mount, selectedDevice check is sufficient inside.
 
   useEffect(() => {
     let canceled = false;
