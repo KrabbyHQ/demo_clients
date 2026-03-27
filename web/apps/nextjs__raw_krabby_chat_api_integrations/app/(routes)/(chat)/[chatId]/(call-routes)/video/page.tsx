@@ -1,8 +1,7 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 import { mockChats } from '../../../mocks';
 import { getInitials, formatTime } from '../../../utils';
 import {
@@ -19,20 +18,40 @@ import RTCDebugOverlay from './components/RTCDebugOverlay';
 
 export default function VideoCallPage() {
   const params = useParams();
+  const router = useRouter();
   const chatId = params?.chatId as string;
   const chat = mockChats.find((c) => c.id === chatId) ?? mockChats[0];
   const [muted, setMuted] = useState(false);
   const [cameraOff, setCameraOff] = useState(false);
   const [seconds, setSeconds] = useState(0);
-  const [soundLevels, setSoundoundLevels] = useState([0.1, 0.1, 0.1]);
+  const [soundLevels, setSoundLevels] = useState([0.1, 0.1, 0.1]);
   const [devices, setDevices] = useState<MediaDeviceInfo[]>([]);
   const [selectedMic, setSelectedMic] = useState<string>('');
   const [selectedCamera, setSelectedCamera] = useState<string>('');
   const [showSettings, setShowSettings] = useState(false);
-  const [peerConnection, setPeerConnection] = useState<RTCPeerConnection | null>(null);
+  const [peerConnection] = useState<RTCPeerConnection | null>(null);
+  const [stream, setStream] = useState<MediaStream | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const selfVideoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
+  const lastCapturedDevices = useRef({ camera: '', mic: '' });
+
+  const stopAllTracks = useCallback(() => {
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((track) => {
+        track.stop();
+      });
+      streamRef.current = null;
+    }
+    // Switch selection back to default
+    setSelectedMic('');
+    setSelectedCamera('');
+  }, []);
+
+  const handleEndCall = useCallback(() => {
+    stopAllTracks();
+    router.push('/' + chatId);
+  }, [chatId, router, stopAllTracks]);
 
   useEffect(() => {
     const timer = setInterval(() => setSeconds((s) => s + 1), 1000);
@@ -40,7 +59,7 @@ export default function VideoCallPage() {
   }, []);
 
   useEffect(() => {
-    async function getDevices() {
+    const getDevices = async () => {
       try {
         const allDevices = await navigator.mediaDevices.enumerateDevices();
         setDevices(allDevices);
@@ -55,43 +74,60 @@ export default function VideoCallPage() {
       } catch (err) {
         console.error('Error enumerating devices:', err);
       }
-    }
+    };
     getDevices();
+    navigator.mediaDevices.addEventListener('devicechange', getDevices);
+    return () => navigator.mediaDevices.removeEventListener('devicechange', getDevices);
   }, [selectedMic, selectedCamera]);
 
   useEffect(() => {
     async function setupCamera() {
-      if (cameraOff) {
-        if (streamRef.current) {
-          streamRef.current.getTracks().forEach((t) => t.stop());
-          streamRef.current = null;
-        }
-        if (selfVideoRef.current) {
-          selfVideoRef.current.srcObject = null;
-        }
-        return;
+      // If we change devices, we should stop the old stream and get a new one.
+      const deviceChanged =
+        selectedCamera !== lastCapturedDevices.current.camera ||
+        selectedMic !== lastCapturedDevices.current.mic;
+
+      if (deviceChanged && streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop());
+        streamRef.current = null;
       }
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: selectedCamera ? { deviceId: { exact: selectedCamera } } : true,
-          audio: selectedMic ? { deviceId: { exact: selectedMic } } : true,
-        });
-        streamRef.current = stream;
-        if (selfVideoRef.current) {
-          selfVideoRef.current.srcObject = stream;
+
+      if (!streamRef.current) {
+        try {
+          const newStream = await navigator.mediaDevices.getUserMedia({
+            video: selectedCamera ? { deviceId: { exact: selectedCamera } } : true,
+            audio: selectedMic ? { deviceId: { exact: selectedMic } } : true,
+          });
+          streamRef.current = newStream;
+          setStream(newStream);
+          lastCapturedDevices.current = { camera: selectedCamera, mic: selectedMic };
+        } catch (err) {
+          console.error('Error accessing camera:', err);
         }
-      } catch (err) {
-        console.error('Error accessing camera:', err);
+      }
+
+      // Sync tracks with state
+      if (streamRef.current) {
+        streamRef.current.getAudioTracks().forEach((t) => (t.enabled = !muted));
+        streamRef.current.getVideoTracks().forEach((t) => (t.enabled = !cameraOff));
+
+        // Ensure the video element has the stream (even if it just re-mounted)
+        if (selfVideoRef.current && selfVideoRef.current.srcObject !== streamRef.current) {
+          selfVideoRef.current.srcObject = streamRef.current;
+        }
       }
     }
     setupCamera();
+  }, [cameraOff, muted, selectedMic, selectedCamera]);
+
+  useEffect(() => {
+    // Final cleanup for unmount and window closing
+    window.addEventListener('beforeunload', stopAllTracks);
     return () => {
-      if (streamRef.current) {
-        streamRef.current.getTracks().forEach((t) => t.stop());
-        streamRef.current = null;
-      }
+      window.removeEventListener('beforeunload', stopAllTracks);
+      stopAllTracks();
     };
-  }, [cameraOff, selectedMic, selectedCamera]);
+  }, [stopAllTracks]);
 
   return (
     <div className="h-screen w-screen bg-black flex flex-col overflow-hidden text-white">
@@ -99,15 +135,15 @@ export default function VideoCallPage() {
       <RTCDebugOverlay peerConnection={peerConnection} />
 
       {/* Top Overlay */}
-      <div className="absolute top-0 inset-x-0 p-6 flex items-center justify-between bg-gradient-to-b from-black/60 to-transparent z-20">
-        <Link
-          href={'/' + chatId}
+      <div className="absolute top-0 inset-x-0 p-6 flex items-center justify-between bg-linear-to-b from-black/60 to-transparent z-20">
+        <button
+          onClick={handleEndCall}
           className="text-white/70 hover:text-white transition-colors duration-150 p-2 -ml-2"
         >
           <BackIcon />
-        </Link>
+        </button>
         <div className="flex flex-col items-center">
-          <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-white/40 mb-0.5">
+          <span className="text-[10px] font-bold tracking-widest uppercase text-white/40 mb-0.5">
             Live Video
           </span>
           <span className="text-sm font-semibold">{chat.name}</span>
@@ -126,7 +162,7 @@ export default function VideoCallPage() {
             {showSettings && (
               <div className="absolute right-0 mt-2 w-64 bg-zinc-900 border border-white/10 shadow-2xl z-50 p-4 rounded-xl">
                 <div className="mb-4">
-                  <p className="text-[10px] font-bold tracking-[0.1em] uppercase text-white/40 mb-3">
+                  <p className="text-[10px] font-bold tracking-widest uppercase text-white/40 mb-3">
                     Camera
                   </p>
                   <div className="space-y-1.5">
@@ -151,7 +187,7 @@ export default function VideoCallPage() {
                   </div>
                 </div>
                 <div>
-                  <p className="text-[10px] font-bold tracking-[0.1em] uppercase text-white/40 mb-3">
+                  <p className="text-[10px] font-bold tracking-widest uppercase text-white/40 mb-3">
                     Microphone
                   </p>
                   <div className="space-y-1.5">
@@ -205,7 +241,7 @@ export default function VideoCallPage() {
         />
 
         {/* Self Preview */}
-        <div className="absolute bottom-28 right-6 w-32 md:w-48 aspect-[3/4] md:aspect-video bg-zinc-800 border border-white/20 rounded-xl overflow-hidden shadow-2xl z-10">
+        <div className="absolute bottom-28 right-6 w-32 md:w-48 aspect-3/4 md:aspect-video bg-zinc-800 border border-white/20 rounded-xl overflow-hidden shadow-2xl z-10">
           {cameraOff ? (
             <div className="w-full h-full flex items-center justify-center bg-zinc-800">
               <span className="text-[10px] font-semibold text-white/30 uppercase tracking-widest">
@@ -225,10 +261,16 @@ export default function VideoCallPage() {
       </div>
 
       {/* Bottom Controls */}
-      <div className="absolute bottom-0 inset-x-0 p-8 md:p-12 flex items-center justify-center gap-6 md:gap-10 bg-gradient-to-t from-black/80 to-transparent z-20">
+      <div className="absolute bottom-0 inset-x-0 p-8 md:p-12 flex items-center justify-center gap-6 md:gap-10 bg-linear-to-t from-black/80 to-transparent z-20">
         <div className="flex flex-col items-center gap-2">
           <button
-            onClick={() => setMuted(!muted)}
+            onClick={() => {
+              const newMuted = !muted;
+              setMuted(newMuted);
+              if (streamRef.current) {
+                streamRef.current.getAudioTracks().forEach((t) => (t.enabled = !newMuted));
+              }
+            }}
             className={
               'w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-full border backdrop-blur-md transition-all duration-200 ' +
               (muted
@@ -241,22 +283,28 @@ export default function VideoCallPage() {
           {!muted && (
             <MiniSoundStreamVisualizer
               muted={muted}
-              selectedMic={selectedMic}
+              stream={stream}
               levels={soundLevels}
-              setLevels={setSoundoundLevels}
+              setLevels={setSoundLevels}
             />
           )}
         </div>
 
-        <Link
-          href={'/' + chatId}
+        <button
+          onClick={handleEndCall}
           className="w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full bg-red-600 text-white hover:bg-red-500 transition-all duration-200 shadow-xl shadow-red-900/40"
         >
           <EndCallIcon />
-        </Link>
+        </button>
 
         <button
-          onClick={() => setCameraOff(!cameraOff)}
+          onClick={() => {
+            const newOff = !cameraOff;
+            setCameraOff(newOff);
+            if (streamRef.current) {
+              streamRef.current.getVideoTracks().forEach((t) => (t.enabled = !newOff));
+            }
+          }}
           className={
             'w-14 h-14 md:w-16 md:h-16 flex items-center justify-center rounded-full border backdrop-blur-md transition-all duration-200 ' +
             (cameraOff

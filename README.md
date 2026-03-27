@@ -11,7 +11,7 @@ This [monorepo] repository contains all Front-ends/clients for demo-ing integrat
 
 ## Main Demo Directories
 
-- `web`: For all web based demos.
+- `web`: For all web-based demos.
 
   Currently available builds.
 
@@ -40,7 +40,7 @@ This [monorepo] repository contains all Front-ends/clients for demo-ing integrat
     2. ...
     3. ...
     
-- `mobile`: For all mobile applications (in view
+- `mobile`: For all mobile applications (in view)
 
   Currently available builds.
   
@@ -55,6 +55,14 @@ To get started with any of the demo clients:
 1. Clone this repository.
 2. Navigate to the desired client category (e.g., `web/apps`).
 3. Then Follow the specific instructions in each app's `README.md`.
+
+## Data Modelling Reference
+
+The project contains an SQL reference to the complete `Krabby chat API`. The SQL reference is defined in the following SQL schema file:
+
+- [`/docs/reference/data_model/schema.sql`](./docs/reference/data_model/schema.sql)
+
+This schema is to serve as a guide/helper for structuring client/front-end data. E.g. within Redux Toolkit slices and for other client-side state management chores. Please refer to it to ensure type safety and consistency.
 
 ## Continuous Integration (CI)
 

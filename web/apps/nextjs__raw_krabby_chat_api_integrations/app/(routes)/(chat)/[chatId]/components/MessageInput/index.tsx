@@ -1,5 +1,7 @@
+'use client';
+
 import { useState, useRef, useCallback, useEffect } from 'react';
-import { AttachIcon, MicIcon, EmojiIcon, TrashIcon, SendIcon } from '../../../../../../trash/Icons';
+import { AttachIcon, MicIcon, EmojiIcon, TrashIcon, SendIcon } from '../../../components/Icons';
 
 function MessageInput() {
   const [isRecording, setIsRecording] = useState(false);
@@ -10,10 +12,17 @@ function MessageInput() {
   const animationFrameRef = useRef<number | null>(null);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
+  const isStartingRef = useRef(false);
 
   const startRecording = async () => {
+    if (isStartingRef.current || isRecording) return;
+    isStartingRef.current = true;
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      if (!isStartingRef.current) {
+        stream.getTracks().forEach((t) => t.stop());
+        return;
+      }
       streamRef.current = stream;
       const AudioContextClass =
         window.AudioContext ||
@@ -38,7 +47,7 @@ function MessageInput() {
       const update = () => {
         if (!analyzerRef.current) return;
         animationFrameRef.current = requestAnimationFrame(update);
-        analyzerRef.current.getByteFrequencyData(dataArray as unknown as Uint8Array<ArrayBuffer>);
+        analyzerRef.current.getByteFrequencyData(dataArray);
 
         // Take a subset of frequencies for the visualizer
         const newLevels = [];
@@ -51,6 +60,8 @@ function MessageInput() {
       update();
     } catch (err) {
       console.error('Error starting recording:', err);
+    } finally {
+      isStartingRef.current = false;
     }
   };
 

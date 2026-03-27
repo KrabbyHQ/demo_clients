@@ -1,4 +1,4 @@
-import { ChatsIcon, CallsIcon, ContactsIcon, SettingsIcon } from '../../../../../trash/Icons';
+import { ChatsIcon, CallsIcon, ContactsIcon, SettingsIcon } from '../Icons';
 import Link from 'next/link';
 
 function MobileBottomNav() {

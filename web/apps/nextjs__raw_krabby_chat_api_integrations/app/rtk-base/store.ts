@@ -1,27 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-// import navToggleReducer from './slices/navToggleSlice';
-// import transactionsTrayReducer from './slices/transactionsTraySlice';
-// import modalReducer from './slices/modalSlice';
-// import overlayReducer from './slices/overlaySlice';
-// import tokenSelectionReducer from './slices/tokenSelectionSlice';
-// import formTabReducer from './slices/formTabSlice';
-// import exploreReducer from './slices/exploreSlice';
 
-// import adReducer from './slices/adSlice';
-// import postPageReducer from './slices/postPageSlice';
+import chatHomeReducer from './slices/chat_home_slice';
+import newChatModalReducer from './slices/new_chat_modal_slice';
 
 export const store = configureStore({
   reducer: {
-    // navToggle: navToggleReducer,
-    // modalToggle: modalReducer,
-    // transactionsTray: transactionsTrayReducer,
-    // overlay: overlayReducer,
-    // tokenSelection: tokenSelectionReducer,
-    // formTab: formTabReducer,
-    // explore: exploreReducer,
-    // ad: adReducer,
-    // postPage: postPageReducer
+    chatHome: chatHomeReducer,
+    newChatModal: newChatModalReducer,
   },
 });
 

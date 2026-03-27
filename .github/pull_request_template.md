@@ -55,8 +55,8 @@ High-level overview of what changed:
 
 Describe how you validated the changes.
 
-- [ ] Unit tests (`cargo test --lib`)
-- [ ] Integration tests (`cargo test --test '*'`)
+- [ ] Unit tests (run project test script)
+- [ ] Integration tests (run project integration test script)
 - [ ] Manual testing
 - [ ] Benchmarks (if performance related)
 

@@ -31,6 +31,9 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # environment variable files
+.env
+.env.local
+.env.test
 .env.development
 .env.production
 .env.staging
