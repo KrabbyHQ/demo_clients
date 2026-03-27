@@ -4,13 +4,13 @@ import React from 'react';
 import { useParams } from 'next/navigation';
 import { useAppSelector } from '@/app/rtk-base/hooks';
 import ChatList from './components/ChatList';
-import Sidebar from './components/SideBar';
 import MessageInput from './components/MessageInput';
+import Sidebar from '../components/SideBar';
 import ChatHeader from './components/ChatHeader';
 import ContactInfoPanel from './components/ContactInfoPanel';
 import MobileBottomNav from '../components/MobileBottomNav';
 import MessageThread from './components/MessageThread';
-import NewChatModal from '../components/NewChatModal';
+import NewChatModal from '../components/SideBar';
 
 export default function ChatScreen() {
   const params = useParams();

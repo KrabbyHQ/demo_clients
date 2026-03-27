@@ -6,7 +6,7 @@ import {
   ArchiveIcon,
   SettingsIcon,
   ProfileIcon,
-} from '../../../components/Icons';
+} from '../Icons';
 
 function Sidebar() {
   return (
