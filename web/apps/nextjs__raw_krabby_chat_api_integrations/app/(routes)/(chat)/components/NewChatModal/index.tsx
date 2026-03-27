@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '@/app/rtk-base/hooks';
 import { closeModal } from '@/app/rtk-base/slices/new_chat_modal_slice';
 import { addChat } from '@/app/rtk-base/slices/chat_home_slice';
@@ -11,14 +11,29 @@ import { PlusIcon, SearchIcon } from '../Icons';
 const NewChatModal = () => {
   const { isOpen } = useAppSelector((state) => state.newChatModal);
   const dispatch = useAppDispatch();
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const handleClose = () => {
     dispatch(closeModal());
   };
 
-  const chatId = crypto.randomUUID();
+  useEffect(() => {
+    if (isOpen) {
+      searchInputRef.current?.focus();
+
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          handleClose();
+        }
+      };
+
+      window.addEventListener('keydown', handleKeyDown);
+      return () => window.removeEventListener('keydown', handleKeyDown);
+    }
+  }, [isOpen]);
 
   const handleStartChat = (user: { id: string; name: string }) => {
+    const chatId = crypto.randomUUID();
     dispatch(
       addChat({
         id: chatId,
@@ -41,15 +56,28 @@ const NewChatModal = () => {
   }
 
   return (
-    <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4">
-      <div className="bg-white w-full max-w-md max-h-[80vh] flex flex-col">
+    <div
+      className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4"
+      onClick={handleClose}
+    >
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+        className="bg-white w-full max-w-md max-h-[80vh] flex flex-col"
+        onClick={(e) => e.stopPropagation()}
+      >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-black/15 shrink-0">
-          <h2 className="text-sm font-semibold tracking-[0.15em] uppercase text-black">
+          <h2
+            id="modal-title"
+            className="text-sm font-semibold tracking-[0.15em] uppercase text-black"
+          >
             New Conversation
           </h2>
           <button
             onClick={handleClose}
+            aria-label="Close new conversation"
             className="w-8 h-8 flex items-center justify-center text-black/40 hover:text-black transition-colors"
           >
             <PlusIcon size={16} className="transform rotate-45" />
@@ -61,7 +89,9 @@ const NewChatModal = () => {
           <div className="border border-black/20 flex items-center gap-2 px-3 py-2 focus-within:border-black transition-colors duration-150">
             <SearchIcon />
             <input
+              ref={searchInputRef}
               type="text"
+              aria-label="Search users"
               placeholder="Search users..."
               className="flex-1 text-sm text-black placeholder:text-black/30 bg-transparent outline-none font-mono min-w-0"
             />
