@@ -10,7 +10,7 @@ import ChatHeader from './components/ChatHeader';
 import ContactInfoPanel from './components/ContactInfoPanel';
 import MobileBottomNav from '../components/MobileBottomNav';
 import MessageThread from './components/MessageThread';
-import NewChatModal from '../components/SideBar';
+import NewChatModal from '../components/NewChatModal';
 
 export default function ChatScreen() {
   const params = useParams();

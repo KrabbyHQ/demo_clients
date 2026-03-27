@@ -7,7 +7,7 @@ import MobileBottomNav from './components/MobileBottomNav';
 import { getInitials } from './utils';
 import { useAppDispatch, useAppSelector } from '@/app/rtk-base/hooks';
 import { openModal } from '@/app/rtk-base/slices/new_chat_modal_slice';
-import NewChatModal from './components/SideBar';
+import NewChatModal from './components/NewChatModal';
 
 export default function ChatHome() {
   const dispatch = useAppDispatch();
