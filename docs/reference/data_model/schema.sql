@@ -150,7 +150,7 @@ CREATE INDEX IF NOT EXISTS idx_message_archives_message ON message_archives (mes
 CREATE TABLE IF NOT EXISTS message_edits (
     id BIGSERIAL PRIMARY KEY,
     message_id BIGINT NOT NULL REFERENCES messages(id) ON DELETE CASCADE,
-    previous_context TEXT NOT NULL,
+    previous_content TEXT NOT NULL,
     new_content TEXT NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
