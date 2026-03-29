@@ -1,0 +1,111 @@
+'use client';
+
+import React from 'react';
+import { useRouter } from 'next/navigation';
+import { useAppDispatch, useAppSelector } from '@/app/rtk-base/hooks';
+import { closeGlobalModal, setModalLoading } from '@/app/rtk-base/slices/global_modal_slice';
+import { PlusIcon } from '../../../../Icons';
+import { handleLogout } from '@/app/rtk-base/slices/auth_slice';
+import toast from 'react-hot-toast';
+
+/**
+ * A reusable, centralized modal component controlled via Redux.
+ * This specific implementation handles global actions like 'LOGOUT_USER'.
+ */
+const GlobalModal = () => {
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const { isOpen, title, message, confirmLabel, cancelLabel, isLoading, actionType } =
+    useAppSelector((state) => state.globalModal);
+
+  if (!isOpen) return null;
+
+  const handleClose = () => {
+    if (isLoading) return;
+    dispatch(closeGlobalModal());
+  };
+
+  const handleConfirm = async () => {
+    // ── Action: LOGOUT_USER ──────────────────────────────────────────────────
+    if (actionType === 'LOGOUT_USER') {
+      dispatch(setModalLoading(true));
+
+      const res = await dispatch(handleLogout());
+
+      dispatch(setModalLoading(false));
+
+      // Pattern: check request successes before processing redirects
+      if (res.meta.requestStatus === 'fulfilled') {
+        toast.success('Logged out successfully');
+        dispatch(closeGlobalModal());
+        router.replace('/login');
+      } else {
+        // Even if the server call fails, the slice handles local cleanup
+        toast.error('Logout failed, but local session cleared');
+        dispatch(closeGlobalModal());
+        router.replace('/login');
+      }
+      return;
+    }
+
+    // Future actions (e.g., DELETE_ACCOUNT, CLEAR_CHAT) can be added here
+  };
+
+  return (
+    <div
+      className="fixed inset-0 bg-black/40 z-[200] flex items-center justify-center p-4 backdrop-blur-[1px]"
+      onClick={handleClose}
+    >
+      <div
+        className="bg-white w-full max-w-sm border border-black/10 shadow-2xl flex flex-col animate-in fade-in zoom-in duration-200"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between p-4 border-b border-black/15 shrink-0 bg-gray-50/50">
+          <h2 className="text-[11px] font-bold tracking-[0.2em] uppercase text-black/60">
+            {title || 'Confirmation'}
+          </h2>
+          <button
+            onClick={handleClose}
+            className="w-6 h-6 flex items-center justify-center text-black/30 hover:text-black transition-colors cursor-pointer"
+          >
+            <PlusIcon size={16} className="rotate-45" />
+          </button>
+        </div>
+
+        {/* Content */}
+        <div className="p-6 pb-8">
+          <p className="text-sm text-black/70 leading-relaxed font-nunito">{message}</p>
+        </div>
+
+        {/* Actions */}
+        <div className="flex border-t border-black/10 divide-x divide-black/10">
+          <button
+            onClick={handleClose}
+            disabled={isLoading}
+            className="flex-1 py-4 text-[10px] font-bold tracking-[0.2em] uppercase text-black/40 hover:text-black hover:bg-gray-50 transition-all duration-200 disabled:opacity-50 cursor-pointer"
+          >
+            {cancelLabel}
+          </button>
+          <button
+            onClick={handleConfirm}
+            disabled={isLoading}
+            className="flex-1 py-4 text-[10px] font-bold tracking-[0.2em] uppercase text-black hover:bg-black hover:text-white transition-all duration-200 disabled:opacity-50 cursor-pointer"
+          >
+            {isLoading ? (
+              <span className="flex items-center justify-center gap-1.5">
+                <span className="w-1 h-1 bg-current rounded-full animate-bounce" />
+                <span className="w-1 h-1 bg-current rounded-full animate-bounce [animation-delay:0.2s]" />
+                <span className="w-1 h-1 bg-current rounded-full animate-bounce [animation-delay:0.4s]" />
+              </span>
+            ) : (
+              confirmLabel
+            )}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default GlobalModal;
