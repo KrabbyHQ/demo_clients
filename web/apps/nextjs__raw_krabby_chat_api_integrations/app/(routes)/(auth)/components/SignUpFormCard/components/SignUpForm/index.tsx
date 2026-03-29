@@ -7,6 +7,10 @@ import { handleRegister, clearError } from '@/app/rtk-base/slices/auth_slice';
 import toast from 'react-hot-toast';
 import { EyeIcon, EyeOffIcon } from '@/app/Icons';
 
+/**
+ * SignUpForm component for user registration.
+ * Includes comprehensive field validation and accessibility features.
+ */
 export default function SignUpForm() {
   const router = useRouter();
   const dispatch = useAppDispatch();
@@ -44,17 +48,46 @@ export default function SignUpForm() {
     }));
   };
 
+  /**
+   * Validates password against the required criteria:
+   * - Minimum 8 characters
+   * - At least one uppercase letter
+   * - At least one number
+   * - At least one special character
+   */
+  const validatePassword = (password: string) => {
+    const minLength = password.length >= 8;
+    const hasUppercase = /[A-Z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    if (!minLength) return 'Password must be at least 8 characters long.';
+    if (!hasUppercase) return 'Password must include at least one uppercase letter.';
+    if (!hasNumber) return 'Password must include at least one number.';
+    if (!hasSpecialChar) return 'Password must include at least one special character.';
+
+    return null;
+  };
+
   const onHandleSignUp = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const { first_name, last_name, email, password, country, phone_number } = formData;
 
+    // 1. Basic empty check
     if (!first_name || !last_name || !email || !password || !country || !phone_number) {
       toast.error('Please fill in all fields');
       return;
     }
 
-    // Dispatch thunk
+    // 2. Client-side password validation (matching UI hint)
+    const passwordError = validatePassword(password);
+    if (passwordError) {
+      toast.error(passwordError);
+      return;
+    }
+
+    // 3. Dispatch registration thunk
     const res = await dispatch(
       handleRegister({
         first_name,
@@ -86,7 +119,7 @@ export default function SignUpForm() {
           >
             First name
           </label>
-          <div className="border border-black/25 focus-within:border-black transition-colors duration-150">
+          <div className="border border-black/25 focus-within:border-black transition-colors duration-150 bg-white">
             <input
               id="first_name"
               type="text"
@@ -109,7 +142,7 @@ export default function SignUpForm() {
           >
             Last name
           </label>
-          <div className="border border-black/25 focus-within:border-black transition-colors duration-150">
+          <div className="border border-black/25 focus-within:border-black transition-colors duration-150 bg-white">
             <input
               id="last_name"
               type="text"
@@ -134,7 +167,7 @@ export default function SignUpForm() {
         >
           Email address
         </label>
-        <div className="border border-black/25 focus-within:border-black transition-colors duration-150">
+        <div className="border border-black/25 focus-within:border-black transition-colors duration-150 bg-white">
           <input
             id="email"
             type="email"
@@ -158,7 +191,7 @@ export default function SignUpForm() {
         >
           Password
         </label>
-        <div className="border border-black/25 focus-within:border-black transition-colors duration-150 flex items-center pr-3">
+        <div className="border border-black/25 focus-within:border-black transition-colors duration-150 flex items-center pr-3 bg-white">
           <input
             id="password"
             type={showPassword ? 'text' : 'password'}
@@ -199,7 +232,7 @@ export default function SignUpForm() {
           >
             Country
           </label>
-          <div className="border border-black/25 focus-within:border-black transition-colors duration-150">
+          <div className="border border-black/25 focus-within:border-black transition-colors duration-150 bg-white">
             <input
               id="country"
               type="text"
@@ -222,7 +255,7 @@ export default function SignUpForm() {
           >
             Phone
           </label>
-          <div className="border border-black/25 focus-within:border-black transition-colors duration-150">
+          <div className="border border-black/25 focus-within:border-black transition-colors duration-150 bg-white">
             <input
               id="phone_number"
               type="tel"
