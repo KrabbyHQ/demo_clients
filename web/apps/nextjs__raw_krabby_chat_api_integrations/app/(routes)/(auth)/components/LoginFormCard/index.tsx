@@ -1,12 +1,11 @@
 import React from 'react';
-import Form from './components/Form';
+import LoginForm from './components/LoginForm';
 
 interface FormCardProps {
   title: string;
-  children: React.ReactNode;
 }
 
-export default function FormCard({ title, children }: FormCardProps) {
+export default function LoginFormCard({ title }: FormCardProps) {
   return (
     <div className="border border-black/20 bg-white">
       <div className="border-b border-black/20 px-5 py-3 flex items-center justify-between">
@@ -19,7 +18,7 @@ export default function FormCard({ title, children }: FormCardProps) {
           <div className="w-1.5 h-1.5 rounded-full bg-black" />
         </div>
       </div>
-      <Form>{children}</Form>
+      <LoginForm />
     </div>
   );
 }

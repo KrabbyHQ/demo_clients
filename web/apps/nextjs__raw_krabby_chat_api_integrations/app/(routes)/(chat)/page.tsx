@@ -1,13 +1,14 @@
 'use client';
 import React from 'react';
 import Link from 'next/link';
-import { SearchIcon, PlusIcon } from './components/Icons';
 import Sidebar from './components/SideBar';
 import MobileBottomNav from './components/MobileBottomNav';
 import { getInitials } from './utils';
 import { useAppDispatch, useAppSelector } from '@/app/rtk-base/hooks';
 import { openModal } from '@/app/rtk-base/slices/new_chat_modal_slice';
 import NewChatModal from './components/NewChatModal';
+import UserAccountMenu from './components/UserAccountMenu';
+import { SearchIcon, PlusIcon, LayoutGridIcon } from '../../Icons';
 
 export default function ChatHome() {
   const dispatch = useAppDispatch();
@@ -26,13 +27,14 @@ export default function ChatHome() {
           <Sidebar />
 
           {/* ── Col 2 · Chat list ── */}
-          {/* Mobile: full width. Tablet: fixed width alongside main. Desktop: fixed width. */}
           <div className="w-full md:w-72 lg:w-80 border-r border-black/15 flex flex-col shrink-0 bg-white">
             {/* Mobile top bar */}
             <div className="md:hidden border-b border-black/15 px-4 py-3 flex items-center justify-between shrink-0">
               <div className="flex items-center gap-2.5">
                 <div className="w-7 h-7 bg-black flex items-center justify-center">
-                  <span className="text-white text-[10px] font-bold tracking-widest">K</span>
+                  <span className="text-white text-[10px] font-bold tracking-widest text-center">
+                    KR
+                  </span>
                 </div>
                 <span className="text-sm font-semibold tracking-[0.15em] uppercase text-black">
                   Krach
@@ -52,6 +54,9 @@ export default function ChatHome() {
                 >
                   <PlusIcon size={16} />
                 </button>
+                <div className="w-[1px] h-4 bg-black/10 mx-0.5" />
+                {/* Mobile User Menu Trigger (Top Right) */}
+                <UserAccountMenu variant="mobile" trigger={<LayoutGridIcon size={18} />} />
               </div>
             </div>
 
@@ -89,7 +94,6 @@ export default function ChatHome() {
                   href={`/${chat.id}`}
                   className={`flex items-center gap-3 px-4 py-3.5 border-b border-black/8 hover:bg-black/[0.03] transition-colors duration-150 ${i === 0 ? 'bg-black/[0.03]' : ''}`}
                 >
-                  {/* Avatar */}
                   <div className="relative shrink-0">
                     <div className="w-10 h-10 md:w-9 md:h-9 border border-black/20 flex items-center justify-center bg-white">
                       <span className="text-[11px] font-semibold text-black/70 tracking-wide">
@@ -98,7 +102,6 @@ export default function ChatHome() {
                     </div>
                   </div>
 
-                  {/* Content */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-0.5">
                       <span className="text-sm font-semibold text-black truncate leading-none">
@@ -122,9 +125,8 @@ export default function ChatHome() {
             </div>
           </div>
 
-          {/* ── Col 3 · Empty state — hidden on mobile, hidden on tablet, visible on desktop ── */}
+          {/* ── Col 3 · Empty state ── */}
           <main className="hidden lg:flex flex-1 flex-col relative overflow-hidden bg-gray-100">
-            {/* Grid background */}
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
@@ -134,11 +136,10 @@ export default function ChatHome() {
               }}
             />
 
-            {/* Centered empty state */}
             <div className="relative flex-1 flex flex-col items-center justify-center px-8">
               <div className="w-20 h-20 border border-black/15 flex items-center justify-center mb-8">
                 <span className="text-4xl font-bold text-black/10 tracking-widest select-none">
-                  K
+                  KR
                 </span>
               </div>
 
@@ -149,14 +150,10 @@ export default function ChatHome() {
                 </p>
               </div>
 
-              {/* Stat strip */}
               <div className="border border-black/15 grid border-r-0 grid-cols-3 mb-10">
                 {[
                   { label: 'Conversations', value: String(chats.length) },
-                  {
-                    label: 'Unread',
-                    value: '0',
-                  },
+                  { label: 'Unread', value: '0' },
                   { label: 'Online', value: '0' },
                 ].map((stat) => (
                   <div
@@ -171,7 +168,6 @@ export default function ChatHome() {
                 ))}
               </div>
 
-              {/* CTA */}
               <button
                 onClick={handleOpenModal}
                 className="flex items-center gap-2 border border-black/20 px-5 py-2.5 text-[12px] font-semibold tracking-[0.15em] uppercase text-black hover:bg-black hover:text-white transition-colors duration-150 cursor-pointer"
@@ -180,15 +176,13 @@ export default function ChatHome() {
                 New conversation
               </button>
 
-              {/* Corner decorations */}
               <div className="absolute top-8 left-8 w-6 h-6 border-t border-l border-black/15" />
               <div className="absolute top-8 right-8 w-6 h-6 border-t border-r border-black/15" />
               <div className="absolute bottom-8 left-8 w-6 h-6 border-b border-l border-black/15" />
               <div className="absolute bottom-8 right-8 w-6 h-6 border-b border-r border-black/15" />
             </div>
 
-            {/* Bottom status bar */}
-            <div className="relative border-t border-black/15 px-6 py-2.5 flex items-center justify-between shrink-0">
+            <div className="relative border-t border-black/15 px-6 py-2.5 flex-row items-center justify-between shrink-0 flex">
               <div className="flex items-center gap-4">
                 <span className="text-[10px] font-semibold tracking-[0.15em] uppercase text-black/30">
                   Krach
@@ -205,7 +199,6 @@ export default function ChatHome() {
             </div>
           </main>
 
-          {/* ── Tablet empty state — shown only on md, hidden on lg+ ── */}
           <main className="hidden md:flex lg:hidden flex-1 flex-col relative overflow-hidden bg-gray-100">
             <div
               className="absolute inset-0 pointer-events-none"
@@ -218,7 +211,7 @@ export default function ChatHome() {
             <div className="relative flex-1 flex flex-col items-center justify-center px-6">
               <div className="w-16 h-16 border border-black/15 flex items-center justify-center mb-6">
                 <span className="text-3xl font-bold text-black/10 tracking-widest select-none">
-                  K
+                  KR
                 </span>
               </div>
               <h2 className="text-lg font-semibold text-black tracking-tight mb-2">Krach</h2>
@@ -229,7 +222,6 @@ export default function ChatHome() {
           </main>
         </div>
 
-        {/* ── Mobile bottom nav bar ── */}
         <MobileBottomNav />
       </div>
     </>

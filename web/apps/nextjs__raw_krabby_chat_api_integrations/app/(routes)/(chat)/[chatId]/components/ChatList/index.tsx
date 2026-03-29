@@ -2,10 +2,10 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { PlusIcon, SearchIcon } from '../../../components/Icons';
 import { getInitials } from '../../../utils';
 import { useAppDispatch, useAppSelector } from '@/app/rtk-base/hooks';
 import { openModal } from '@/app/rtk-base/slices/new_chat_modal_slice';
+import { PlusIcon, SearchIcon } from '../../../../../Icons';
 
 interface ChatListProps {
   activeChat: {

@@ -9,10 +9,10 @@ import {
   CallScreenMicIcon,
   BackIcon,
   MicOffIcon,
-  EndCallIcon,
   SpeakerIcon,
+  EndCallIcon,
   SettingsIcon,
-} from '../../../components/Icons';
+} from '../../../../../Icons';
 
 export default function AudioCallPage() {
   const params = useParams();
