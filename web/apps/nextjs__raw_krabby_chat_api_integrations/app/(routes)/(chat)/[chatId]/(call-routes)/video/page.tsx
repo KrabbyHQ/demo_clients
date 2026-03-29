@@ -8,11 +8,11 @@ import {
   BackIcon,
   MicIcon,
   MicOffIcon,
-  CameraOffIcon,
   CameraIcon,
+  CameraOffIcon,
   EndCallIcon,
   SettingsIcon,
-} from '../../../components/Icons';
+} from '../../../../../Icons';
 import MiniSoundStreamVisualizer from './components/MiniSoundStreamVisualizer';
 import RTCDebugOverlay from './components/RTCDebugOverlay';
 
