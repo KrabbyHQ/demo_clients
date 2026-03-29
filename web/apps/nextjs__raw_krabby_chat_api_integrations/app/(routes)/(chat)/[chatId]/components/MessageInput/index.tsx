@@ -1,7 +1,7 @@
 'use client';
 
+import { AttachIcon, MicIcon, EmojiIcon, TrashIcon, SendIcon } from '../../../../../Icons';
 import { useState, useRef, useCallback, useEffect } from 'react';
-import { AttachIcon, MicIcon, EmojiIcon, TrashIcon, SendIcon } from '../../../components/Icons';
 
 function MessageInput() {
   const [isRecording, setIsRecording] = useState(false);

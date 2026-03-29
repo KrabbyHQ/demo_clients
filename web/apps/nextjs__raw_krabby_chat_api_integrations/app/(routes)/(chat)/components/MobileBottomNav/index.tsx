@@ -1,5 +1,5 @@
-import { ChatsIcon, CallsIcon, ContactsIcon, SettingsIcon } from '../Icons';
 import Link from 'next/link';
+import { ChatsIcon, CallsIcon, ContactsIcon, SettingsIcon } from '../../../../Icons';
 
 function MobileBottomNav() {
   return (

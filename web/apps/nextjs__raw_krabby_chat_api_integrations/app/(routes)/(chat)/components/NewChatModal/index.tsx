@@ -5,8 +5,8 @@ import { useAppDispatch, useAppSelector } from '@/app/rtk-base/hooks';
 import { closeModal } from '@/app/rtk-base/slices/new_chat_modal_slice';
 import { addChat } from '@/app/rtk-base/slices/chat_home_slice';
 import { mockUsers } from '../../mocks';
+import { PlusIcon, SearchIcon } from '../../../../Icons';
 import { getInitials } from '../../utils';
-import { PlusIcon, SearchIcon } from '../Icons';
 
 const NewChatModal = () => {
   const { isOpen } = useAppSelector((state) => state.newChatModal);
