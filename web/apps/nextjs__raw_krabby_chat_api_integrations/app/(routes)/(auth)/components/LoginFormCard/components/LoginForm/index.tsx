@@ -69,7 +69,7 @@ export default function LoginForm() {
   };
 
   return (
-    <form onSubmit={onHandleSignIn} className="p-5 space-y-4">
+    <form onSubmit={onHandleSignIn} className="p-5 space-y-4" noValidate>
       {/* Email field */}
       <div>
         <label
@@ -87,6 +87,8 @@ export default function LoginForm() {
             value={formData.email}
             onChange={handleInputChange}
             disabled={isLoading}
+            required
+            aria-required="true"
             className="w-full px-3 py-2.5 text-sm text-black placeholder:text-black/35 bg-transparent outline-none font-mono"
           />
         </div>
@@ -117,25 +119,34 @@ export default function LoginForm() {
             value={formData.password}
             onChange={handleInputChange}
             disabled={isLoading}
+            required
+            aria-required="true"
             className="flex-1 px-3 py-2.5 text-sm text-black placeholder:text-black/35 bg-transparent outline-none font-mono"
           />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="text-black/30 hover:text-black transition-colors cursor-pointer"
+            className="text-black/30 hover:text-black transition-colors cursor-pointer outline-none focus:text-black"
+            aria-label={showPassword ? 'Hide password' : 'Show password'}
+            aria-pressed={showPassword}
           >
-            {showPassword ? <EyeOffIcon size={16} /> : <EyeIcon size={16} />}
+            {showPassword ? (
+              <EyeOffIcon size={16} aria-hidden="true" />
+            ) : (
+              <EyeIcon size={16} aria-hidden="true" />
+            )}
           </button>
         </div>
       </div>
 
       {/* Divider */}
-      <div className="border-t border-black/15 my-1" />
+      <div className="border-t border-black/15 my-1" role="presentation" />
 
       {/* Submit */}
       <button
         type="submit"
         disabled={isLoading}
+        aria-busy={isLoading}
         className={`w-full bg-black text-white text-sm font-semibold tracking-[0.15em] uppercase py-3 hover:bg-black/80 active:bg-black/90 transition-colors duration-150 cursor-pointer flex items-center justify-center ${
           isLoading ? 'opacity-70 cursor-not-allowed' : ''
         }`}

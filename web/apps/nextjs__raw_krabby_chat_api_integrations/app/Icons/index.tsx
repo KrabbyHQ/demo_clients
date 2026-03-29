@@ -120,7 +120,7 @@ export const PlusIcon = ({ size = 16, ...props }: BaseProps) => (
   </svg>
 );
 
-export const SearchIcon = ({ size = 13 }: { size?: number }) => (
+export const SearchIcon = ({ size = 13, ...props }: BaseProps) => (
   <svg
     width={size}
     height={size}
@@ -130,13 +130,14 @@ export const SearchIcon = ({ size = 13 }: { size?: number }) => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
+    {...props}
   >
     <circle cx="11" cy="11" r="8" />
     <line x1="21" y1="21" x2="16.65" y2="16.65" />
   </svg>
 );
 
-export const PhoneIcon = ({ size = 16 }: { size?: number }) => (
+export const PhoneIcon = ({ size = 16, ...props }: BaseProps) => (
   <svg
     width={size}
     height={size}

@@ -23,7 +23,6 @@ export interface UserProfile {
 export interface AuthResponseData {
   user_profile: UserProfile;
   access_token: string;
-  refresh_token: string;
 }
 
 export interface AuthResponse {
@@ -35,7 +34,6 @@ export interface AuthResponse {
 interface AuthState {
   user: UserProfile | null;
   accessToken: string | null;
-  refreshToken: string | null;
   isLoading: boolean;
   error: string | null;
   isAuthenticated: boolean;
@@ -48,9 +46,9 @@ const getInitialUser = (): UserProfile | null => {
     try {
       return saved ? JSON.parse(saved) : null;
     } catch (e) {
-      return null;
-
       console.error(e);
+
+      return null;
     }
   }
   return null;
@@ -59,7 +57,6 @@ const getInitialUser = (): UserProfile | null => {
 const initialState: AuthState = {
   user: getInitialUser(),
   accessToken: typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null,
-  refreshToken: typeof window !== 'undefined' ? localStorage.getItem('refreshToken') : null,
   isLoading: false,
   error: null,
   isAuthenticated: typeof window !== 'undefined' ? !!localStorage.getItem('accessToken') : false,
@@ -85,12 +82,11 @@ export const handleLogin = createAsyncThunk<
       return rejectWithValue(data.error || data.response_message || 'Login failed');
     }
 
-    const { user_profile, access_token, refresh_token } = data.response;
+    const { user_profile, access_token } = data.response;
 
     if (typeof window !== 'undefined') {
       localStorage.setItem('email', user_profile.email);
       localStorage.setItem('accessToken', access_token);
-      localStorage.setItem('refreshToken', refresh_token);
       localStorage.setItem('userData', JSON.stringify(user_profile));
     }
 
@@ -129,12 +125,11 @@ export const handleRegister = createAsyncThunk<
       return rejectWithValue(data.error || data.response_message || 'Registration failed');
     }
 
-    const { user_profile, access_token, refresh_token } = data.response;
+    const { user_profile, access_token } = data.response;
 
     if (typeof window !== 'undefined') {
       localStorage.setItem('email', user_profile.email);
       localStorage.setItem('accessToken', access_token);
-      localStorage.setItem('refreshToken', refresh_token);
       localStorage.setItem('userData', JSON.stringify(user_profile));
     }
 
@@ -161,12 +156,11 @@ export const handleLogout = createAsyncThunk<void, void, { rejectValue: string }
       const email = typeof window !== 'undefined' ? localStorage.getItem('email') : null;
 
       if (email) {
-        await axiosInstance.post(`/auth/logout?user_email=${email}`, {});
+        await axiosInstance.post(`/auth/logout`, { user_email: email });
       }
 
       if (typeof window !== 'undefined') {
         localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
         localStorage.removeItem('email');
         localStorage.removeItem('accessTokenSetTime');
         localStorage.removeItem('userData');
@@ -177,7 +171,6 @@ export const handleLogout = createAsyncThunk<void, void, { rejectValue: string }
       // Even if backend fails, we ensure local cleanup for user logout safety
       if (typeof window !== 'undefined') {
         localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
         localStorage.removeItem('email');
         localStorage.removeItem('accessTokenSetTime');
         localStorage.removeItem('userData');
@@ -211,7 +204,6 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = action.payload.user_profile;
         state.accessToken = action.payload.access_token;
-        state.refreshToken = action.payload.refresh_token;
         state.isAuthenticated = true;
       })
       .addCase(handleLogin.rejected, (state, action) => {
@@ -227,7 +219,6 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = action.payload.user_profile;
         state.accessToken = action.payload.access_token;
-        state.refreshToken = action.payload.refresh_token;
         state.isAuthenticated = true;
       })
       .addCase(handleRegister.rejected, (state, action) => {
@@ -238,7 +229,6 @@ const authSlice = createSlice({
       .addCase(handleLogout.fulfilled, (state) => {
         state.user = null;
         state.accessToken = null;
-        state.refreshToken = null;
         state.isAuthenticated = false;
         state.error = null;
       })
@@ -246,7 +236,6 @@ const authSlice = createSlice({
         // Reset state anyway to ensure user is logged out visually
         state.user = null;
         state.accessToken = null;
-        state.refreshToken = null;
         state.isAuthenticated = false;
         state.error = null;
       });

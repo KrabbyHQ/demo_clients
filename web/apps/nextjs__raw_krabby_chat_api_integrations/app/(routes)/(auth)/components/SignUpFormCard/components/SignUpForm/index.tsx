@@ -76,7 +76,7 @@ export default function SignUpForm() {
   };
 
   return (
-    <form onSubmit={onHandleSignUp} className="p-5 space-y-4">
+    <form onSubmit={onHandleSignUp} className="p-5 space-y-4" noValidate>
       {/* First name + Last name — side by side */}
       <div className="grid grid-cols-2 gap-3">
         <div>
@@ -95,6 +95,8 @@ export default function SignUpForm() {
               value={formData.first_name}
               onChange={handleInputChange}
               disabled={isLoading}
+              required
+              aria-required="true"
               className="w-full px-3 py-2.5 text-sm text-black placeholder:text-black/35 bg-transparent outline-none font-mono"
             />
           </div>
@@ -116,6 +118,8 @@ export default function SignUpForm() {
               value={formData.last_name}
               onChange={handleInputChange}
               disabled={isLoading}
+              required
+              aria-required="true"
               className="w-full px-3 py-2.5 text-sm text-black placeholder:text-black/35 bg-transparent outline-none font-mono"
             />
           </div>
@@ -139,6 +143,8 @@ export default function SignUpForm() {
             value={formData.email}
             onChange={handleInputChange}
             disabled={isLoading}
+            required
+            aria-required="true"
             className="w-full px-3 py-2.5 text-sm text-black placeholder:text-black/35 bg-transparent outline-none font-mono"
           />
         </div>
@@ -161,14 +167,22 @@ export default function SignUpForm() {
             value={formData.password}
             onChange={handleInputChange}
             disabled={isLoading}
+            required
+            aria-required="true"
             className="flex-1 px-3 py-2.5 text-sm text-black placeholder:text-black/35 bg-transparent outline-none font-mono"
           />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="text-black/30 hover:text-black transition-colors cursor-pointer"
+            className="text-black/30 hover:text-black transition-colors cursor-pointer outline-none focus:text-black"
+            aria-label={showPassword ? 'Hide password' : 'Show password'}
+            aria-pressed={showPassword}
           >
-            {showPassword ? <EyeOffIcon size={16} /> : <EyeIcon size={16} />}
+            {showPassword ? (
+              <EyeOffIcon size={16} aria-hidden="true" />
+            ) : (
+              <EyeIcon size={16} aria-hidden="true" />
+            )}
           </button>
         </div>
         <p className="mt-1.5 text-[11px] text-black/45 tracking-wide leading-relaxed">
@@ -194,6 +208,8 @@ export default function SignUpForm() {
               value={formData.country}
               onChange={handleInputChange}
               disabled={isLoading}
+              required
+              aria-required="true"
               className="w-full px-3 py-2.5 text-sm text-black placeholder:text-black/35 bg-transparent outline-none font-mono"
             />
           </div>
@@ -215,6 +231,8 @@ export default function SignUpForm() {
               value={formData.phone_number}
               onChange={handleInputChange}
               disabled={isLoading}
+              required
+              aria-required="true"
               className="w-full px-3 py-2.5 text-sm text-black placeholder:text-black/35 bg-transparent outline-none font-mono"
             />
           </div>
@@ -222,12 +240,13 @@ export default function SignUpForm() {
       </div>
 
       {/* Divider */}
-      <div className="border-t border-black/15 my-1" />
+      <div className="border-t border-black/15 my-1" role="presentation" />
 
       {/* Submit */}
       <button
         type="submit"
         disabled={isLoading}
+        aria-busy={isLoading}
         className={`w-full bg-black text-white text-sm font-semibold tracking-[0.15em] uppercase py-3 hover:bg-black/80 active:bg-black/90 transition-colors duration-150 cursor-pointer flex items-center justify-center ${
           isLoading ? 'opacity-70 cursor-not-allowed' : ''
         }`}

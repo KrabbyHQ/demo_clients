@@ -1,22 +1,36 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/app/rtk-base/hooks';
 import { closeGlobalModal, setModalLoading } from '@/app/rtk-base/slices/global_modal_slice';
-import { PlusIcon } from '../../../../Icons';
 import { handleLogout } from '@/app/rtk-base/slices/auth_slice';
+import { PlusIcon } from '../../../../Icons';
 import toast from 'react-hot-toast';
 
 /**
  * A reusable, centralized modal component controlled via Redux.
- * This specific implementation handles global actions like 'LOGOUT_USER'.
+ * Enhanced with accessibility attributes and keyboard support.
  */
 const GlobalModal = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { isOpen, title, message, confirmLabel, cancelLabel, isLoading, actionType } =
     useAppSelector((state) => state.globalModal);
+
+  // Keyboard support: Close on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen && !isLoading) {
+        dispatch(closeGlobalModal());
+      }
+    };
+
+    if (isOpen) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, isLoading, dispatch]);
 
   if (!isOpen) return null;
 
@@ -34,7 +48,6 @@ const GlobalModal = () => {
 
       dispatch(setModalLoading(false));
 
-      // Pattern: check request successes before processing redirects
       if (res.meta.requestStatus === 'fulfilled') {
         toast.success('Logged out successfully');
         dispatch(closeGlobalModal());
@@ -48,34 +61,46 @@ const GlobalModal = () => {
       return;
     }
 
-    // Future actions (e.g., DELETE_ACCOUNT, CLEAR_CHAT) can be added here
+    // Future global actions can be handled here based on actionType
   };
 
   return (
     <div
       className="fixed inset-0 bg-black/40 z-[200] flex items-center justify-center p-4 backdrop-blur-[1px]"
       onClick={handleClose}
+      role="presentation"
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
         className="bg-white w-full max-w-sm border border-black/10 shadow-2xl flex flex-col animate-in fade-in zoom-in duration-200"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-black/15 shrink-0 bg-gray-50/50">
-          <h2 className="text-[11px] font-bold tracking-[0.2em] uppercase text-black/60">
+          <h2
+            id="modal-title"
+            className="text-[11px] font-bold tracking-[0.2em] uppercase text-black/60"
+          >
             {title || 'Confirmation'}
           </h2>
           <button
             onClick={handleClose}
-            className="w-6 h-6 flex items-center justify-center text-black/30 hover:text-black transition-colors cursor-pointer"
+            disabled={isLoading}
+            aria-label="Close modal"
+            className="w-6 h-6 flex items-center justify-center text-black/30 hover:text-black transition-colors cursor-pointer outline-none focus:text-black"
           >
-            <PlusIcon size={16} className="rotate-45" />
+            <PlusIcon size={16} className="rotate-45" aria-hidden="true" />
           </button>
         </div>
 
         {/* Content */}
         <div className="p-6 pb-8">
-          <p className="text-sm text-black/70 leading-relaxed font-nunito">{message}</p>
+          <p id="modal-description" className="text-sm text-black/70 leading-relaxed font-nunito">
+            {message}
+          </p>
         </div>
 
         {/* Actions */}
@@ -83,17 +108,18 @@ const GlobalModal = () => {
           <button
             onClick={handleClose}
             disabled={isLoading}
-            className="flex-1 py-4 text-[10px] font-bold tracking-[0.2em] uppercase text-black/40 hover:text-black hover:bg-gray-50 transition-all duration-200 disabled:opacity-50 cursor-pointer"
+            className="flex-1 py-4 text-[10px] font-bold tracking-[0.2em] uppercase text-black/40 hover:text-black hover:bg-gray-50 transition-all duration-200 disabled:opacity-50 cursor-pointer outline-none focus:bg-gray-50"
           >
             {cancelLabel}
           </button>
           <button
             onClick={handleConfirm}
             disabled={isLoading}
-            className="flex-1 py-4 text-[10px] font-bold tracking-[0.2em] uppercase text-black hover:bg-black hover:text-white transition-all duration-200 disabled:opacity-50 cursor-pointer"
+            aria-busy={isLoading}
+            className="flex-1 py-4 text-[10px] font-bold tracking-[0.2em] uppercase text-black hover:bg-black hover:text-white transition-all duration-200 disabled:opacity-50 cursor-pointer outline-none focus:ring-2 focus:ring-black focus:ring-inset"
           >
             {isLoading ? (
-              <span className="flex items-center justify-center gap-1.5">
+              <span className="flex items-center justify-center gap-1.5" aria-hidden="true">
                 <span className="w-1 h-1 bg-current rounded-full animate-bounce" />
                 <span className="w-1 h-1 bg-current rounded-full animate-bounce [animation-delay:0.2s]" />
                 <span className="w-1 h-1 bg-current rounded-full animate-bounce [animation-delay:0.4s]" />
