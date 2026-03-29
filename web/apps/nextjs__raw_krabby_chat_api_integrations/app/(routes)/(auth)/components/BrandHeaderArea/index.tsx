@@ -10,7 +10,7 @@ export default function BrandHeaderArea({ title, subtitle }: BrandHeaderAreaProp
     <div className="mb-8">
       <div className="flex items-center gap-2 mb-6">
         <div className="w-6 h-6 bg-black flex items-center justify-center">
-          <span className="text-white text-sm font-bold tracking-widest">K</span>
+          <span className="text-white text-[10px] font-bold tracking-widest">KR</span>
         </div>
         <span className="text-sm font-semibold tracking-[0.2em] uppercase text-black">Krach</span>
       </div>
