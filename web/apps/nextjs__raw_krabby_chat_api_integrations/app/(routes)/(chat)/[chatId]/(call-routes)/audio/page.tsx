@@ -113,7 +113,7 @@ export default function AudioCallPage() {
           if (canceled || !canvasRef.current || !analyzerRef.current || !dataArrayRef.current)
             return;
           animationFrameRef.current = requestAnimationFrame(draw);
-          analyzerRef.current.getByteFrequencyData(dataArrayRef.current);
+          analyzerRef.current.getByteFrequencyData(dataArrayRef.current as Uint8Array);
 
           const canvas = canvasRef.current;
           const ctx = canvas.getContext('2d');
