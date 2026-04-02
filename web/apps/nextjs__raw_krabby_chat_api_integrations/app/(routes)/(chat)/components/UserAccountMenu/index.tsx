@@ -2,8 +2,8 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/app/rtk-base/hooks';
-import { openGlobalModal } from '@/app/rtk-base/slices/global_modal_slice';
-import { ProfileIcon } from '../../../../Icons';
+import { openGlobalModal } from '@/app/rtk-base/slices/globalModalSlice';
+import { ProfileIcon } from '../../../../icons';
 import { getInitials } from '../../utils';
 
 interface UserAccountMenuProps {

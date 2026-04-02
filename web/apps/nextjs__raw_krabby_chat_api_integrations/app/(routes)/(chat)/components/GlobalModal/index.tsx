@@ -3,9 +3,9 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/app/rtk-base/hooks';
-import { closeGlobalModal, setModalLoading } from '@/app/rtk-base/slices/global_modal_slice';
-import { handleLogout } from '@/app/rtk-base/slices/auth_slice';
-import { PlusIcon } from '../../../../Icons';
+import { closeGlobalModal, setModalLoading } from '@/app/rtk-base/slices/globalModalSlice';
+import { handleLogout } from '@/app/rtk-base/slices/authSlice';
+import { PlusIcon } from '../../../../icons';
 import toast from 'react-hot-toast';
 
 /**

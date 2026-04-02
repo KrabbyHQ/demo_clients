@@ -2,11 +2,11 @@
 
 import React, { useEffect, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '@/app/rtk-base/hooks';
-import { closeModal } from '@/app/rtk-base/slices/new_chat_modal_slice';
-import { addChat } from '@/app/rtk-base/slices/chat_home_slice';
+import { closeModal } from '@/app/rtk-base/slices/newChatModalSlice';
+import { addChat } from '@/app/rtk-base/slices/chatHomeSlice';
 import { mockUsers } from '../../mocks';
 import { getInitials } from '../../utils';
-import { PlusIcon, SearchIcon } from '../../../../Icons';
+import { PlusIcon, SearchIcon } from '../../../../icons';
 
 /**
  * NewChatModal component for starting a new conversation.

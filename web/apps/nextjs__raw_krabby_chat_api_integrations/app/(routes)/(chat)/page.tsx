@@ -5,10 +5,10 @@ import Sidebar from './components/SideBar';
 import MobileBottomNav from './components/MobileBottomNav';
 import { getInitials } from './utils';
 import { useAppDispatch, useAppSelector } from '@/app/rtk-base/hooks';
-import { openModal } from '@/app/rtk-base/slices/new_chat_modal_slice';
+import { openModal } from '@/app/rtk-base/slices/newChatModalSlice';
 import NewChatModal from './components/NewChatModal';
 import UserAccountMenu from './components/UserAccountMenu';
-import { SearchIcon, PlusIcon, LayoutGridIcon } from '../../Icons';
+import { SearchIcon, PlusIcon, LayoutGridIcon } from '../../icons';
 
 export default function ChatHome() {
   const dispatch = useAppDispatch();

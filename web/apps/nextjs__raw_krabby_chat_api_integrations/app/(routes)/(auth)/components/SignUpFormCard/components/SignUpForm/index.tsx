@@ -3,9 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/app/rtk-base/hooks';
-import { handleRegister, clearError } from '@/app/rtk-base/slices/auth_slice';
+import { handleRegister, clearError } from '@/app/rtk-base/slices/authSlice';
 import toast from 'react-hot-toast';
-import { EyeIcon, EyeOffIcon } from '@/app/Icons';
+import { EyeIcon, EyeOffIcon } from '@/app/icons';
 
 /**
  * SignUpForm component for user registration.
