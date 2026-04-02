@@ -21,13 +21,23 @@ This [monorepo] repository contains all Front-ends/clients for demo-ing integrat
     
        ![Next.js Demo - Sign Up](./web/apps/nextjs__raw_krabby_chat_api_integrations/public/screenshots/img-2.png)
     
-       ![Next.js Demo - Chat List](./web/apps/nextjs__raw_krabby_chat_api_integrations/public/screenshots/img-3.png)
+       ![Next.js Demo - Chat List(Desktop View)](./web/apps/nextjs__raw_krabby_chat_api_integrations/public/screenshots/img-3.png)
     
-       ![Next.js Demo - Active Chat](./web/apps/nextjs__raw_krabby_chat_api_integrations/public/screenshots/img-4.png)
+       ![Next.js Demo - Global Modal Pop-Up(Desktop View)](./web/apps/nextjs__raw_krabby_chat_api_integrations/public/screenshots/img-7.png)
     
-       ![Next.js Demo - Audio Call](./web/apps/nextjs__raw_krabby_chat_api_integrations/public/screenshots/img-5.png)
+       ![Next.js Demo - Chat Screen(Mobile View)](./web/apps/nextjs__raw_krabby_chat_api_integrations/public/screenshots/img-8.png)
     
-       ![Next.js Demo - Video Call](./web/apps/nextjs__raw_krabby_chat_api_integrations/public/screenshots/img-6.png)
+       ![Next.js Demo - Chat Screen(Desktop View)](./web/apps/nextjs__raw_krabby_chat_api_integrations/public/screenshots/img-9.png)
+ 
+       ![Next.js Demo - Chat List(Mobile View)](./web/apps/nextjs__raw_krabby_chat_api_integrations/public/screenshots/img-13.png)
+    
+       ![Next.js Demo - Video Call(Responsive View)](./web/apps/nextjs__raw_krabby_chat_api_integrations/public/screenshots/img-15.png)
+    
+       ![Next.js Demo - Video Call(Desktop View)](./web/apps/nextjs__raw_krabby_chat_api_integrations/public/screenshots/img-16.png)
+
+       ![Next.js Demo - Audio Call(Mobile View)](./web/apps/nextjs__raw_krabby_chat_api_integrations/public/screenshots/img-17.png)
+
+       ![Next.js Demo - Audio Call(Desktop View)](./web/apps/nextjs__raw_krabby_chat_api_integrations/public/screenshots/img-18.png)
 
     2. ...
     3. ...
