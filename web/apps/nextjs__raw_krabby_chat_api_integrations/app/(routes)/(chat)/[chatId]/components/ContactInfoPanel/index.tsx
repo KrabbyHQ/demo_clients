@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { getInitials } from '../../../utils';
-import { PhoneIcon, VideoIcon, SearchIcon } from '../../../../../Icons';
+import { PhoneIcon, VideoIcon, SearchIcon } from '../../../../../icons';
 
 interface Chat {
   id: string;

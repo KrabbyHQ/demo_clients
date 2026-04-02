@@ -12,7 +12,7 @@ import {
   SpeakerIcon,
   EndCallIcon,
   SettingsIcon,
-} from '../../../../../Icons';
+} from '../../../../../icons';
 
 export default function AudioCallPage() {
   const params = useParams();
@@ -113,9 +113,7 @@ export default function AudioCallPage() {
           if (canceled || !canvasRef.current || !analyzerRef.current || !dataArrayRef.current)
             return;
           animationFrameRef.current = requestAnimationFrame(draw);
-          analyzerRef.current.getByteFrequencyData(
-            dataArrayRef.current as unknown as Uint8Array<ArrayBuffer>,
-          );
+          analyzerRef.current.getByteFrequencyData(dataArrayRef.current);
 
           const canvas = canvasRef.current;
           const ctx = canvas.getContext('2d');

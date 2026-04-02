@@ -11,8 +11,8 @@ import ContactInfoPanel from './components/ContactInfoPanel';
 import MessageThread from './components/MessageThread';
 import NewChatModal from '../components/NewChatModal';
 import UserAccountMenu from '../components/UserAccountMenu';
-import { openModal } from '@/app/rtk-base/slices/new_chat_modal_slice';
-import { LayoutGridIcon, SearchIcon, PlusIcon } from '../../../Icons';
+import { openModal } from '@/app/rtk-base/slices/newChatModalSlice';
+import { LayoutGridIcon, SearchIcon, PlusIcon } from '../../../icons';
 
 export default function ChatScreen() {
   const params = useParams();

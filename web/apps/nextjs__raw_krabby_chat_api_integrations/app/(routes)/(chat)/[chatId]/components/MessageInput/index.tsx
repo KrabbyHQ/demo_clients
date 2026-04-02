@@ -1,6 +1,6 @@
 'use client';
 
-import { AttachIcon, MicIcon, EmojiIcon, TrashIcon, SendIcon } from '../../../../../Icons';
+import { AttachIcon, MicIcon, EmojiIcon, TrashIcon, SendIcon } from '../../../../../icons';
 import { useState, useRef, useCallback, useEffect } from 'react';
 
 function MessageInput() {
