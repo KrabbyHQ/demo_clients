@@ -2,7 +2,7 @@
 
 First off, thank you for considering contributing to Krabby! It's people like you that make the open-source community such an incredible place to learn, inspire, and create.
 
-All types of contributions are encouraged and valued. See the [Table of Contents](#table-of-contents) for different ways to help and details about how this project handles them. Please make sure to read the relevant section before making your contribution. It will make it a lot easier for us maintainers and smooth out the experience for all involved. The community looks forward to your contributions. 🎉
+All types of contributions are encouraged and valued. See the [Table of Contents](#table-of-contents) for different ways to help and details about how to ensure you do so without encountering any issues. Please make sure to read the relevant sections before making your contribution, as that will help smoothen out the experience for all involved. The community looks forward to your contributions. 🎉
 
 > And if you like the project, but just don't have time to contribute, that's fine too. There are other easy ways to support the project and show your appreciation, which we would also be very happy about:
 >
