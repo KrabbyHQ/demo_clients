@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
-import chatHomeReducer from './slices/chat_home_slice';
-import newChatModalReducer from './slices/new_chat_modal_slice';
-import authReducer from './slices/auth_slice';
-import globalModalReducer from './slices/global_modal_slice';
+import chatHomeReducer from './slices/chatHomeSlice';
+import newChatModalReducer from './slices/newChatModalSlice';
+import authReducer from './slices/authSlice';
+import globalModalReducer from './slices/globalModalSlice';
 
 export const store = configureStore({
   reducer: {
