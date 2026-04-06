@@ -12,7 +12,7 @@ import {
   CameraOffIcon,
   EndCallIcon,
   SettingsIcon,
-} from '../../../../../Icons';
+} from '../../../../../icons';
 import MiniSoundStreamVisualizer from './components/MiniSoundStreamVisualizer';
 import RTCDebugOverlay from './components/RTCDebugOverlay';
 

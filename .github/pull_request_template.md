@@ -76,7 +76,7 @@ Add relevant output, logs, or screenshots where helpful.
 
 ### Checklist
 
-- [ ] ALL AI(ARTIFICIAL INTELLIGENCE)-GENERATED CODE WAS REVIEWED AND REFACTORED WHERE NECESSARY
+- [ ] ALL AI(ARTIFICIAL INTELLIGENCE)-GENERATED CODE/CONTENT WAS REVIEWED AND REFACTORED WHERE NECESSARY
 - [ ] Code follows project style guidelines
 - [ ] Self-review completed
 - [ ] Tests added or updated where necessary

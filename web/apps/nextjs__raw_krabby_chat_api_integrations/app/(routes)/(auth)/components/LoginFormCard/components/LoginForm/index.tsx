@@ -4,9 +4,9 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch, useAppSelector } from '@/app/rtk-base/hooks';
-import { handleLogin, clearError } from '@/app/rtk-base/slices/auth_slice';
+import { handleLogin, clearError } from '@/app/rtk-base/slices/authSlice';
 import toast from 'react-hot-toast';
-import { EyeIcon, EyeOffIcon } from '@/app/Icons';
+import { EyeIcon, EyeOffIcon } from '@/app/icons';
 
 export default function LoginForm() {
   const router = useRouter();

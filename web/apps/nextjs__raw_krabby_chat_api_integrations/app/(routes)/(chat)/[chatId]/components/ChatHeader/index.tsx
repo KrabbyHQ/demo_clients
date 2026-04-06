@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { mockChats } from '../../../mocks';
 import { getInitials } from '../../../utils';
-import { BackIcon, PhoneIcon, VideoIcon, SearchIcon, DotsIcon } from '../../../../../Icons';
+import { BackIcon, PhoneIcon, VideoIcon, SearchIcon, DotsIcon } from '../../../../../icons';
 
 type Chat = (typeof mockChats)[0];
 

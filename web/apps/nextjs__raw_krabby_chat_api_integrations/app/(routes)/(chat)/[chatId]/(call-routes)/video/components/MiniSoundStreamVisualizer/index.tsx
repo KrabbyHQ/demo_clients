@@ -65,6 +65,7 @@ function MiniSoundStreamVisualizer({
           const b3 = dataArray[8] / 255;
           setLevels([Math.max(0.1, b1), Math.max(0.1, b2), Math.max(0.1, b3)]);
         };
+
         update();
       } catch (err) {
         console.error('Error in mini visualizer:', err);

@@ -12,7 +12,7 @@ import {
   SpeakerIcon,
   EndCallIcon,
   SettingsIcon,
-} from '../../../../../Icons';
+} from '../../../../../icons';
 
 export default function AudioCallPage() {
   const params = useParams();
@@ -27,7 +27,7 @@ export default function AudioCallPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const analyzerRef = useRef<AnalyserNode | null>(null);
-  const dataArrayRef = useRef<Uint8Array | null>(null);
+  const dataArrayRef = useRef<any>(null);
   const animationFrameRef = useRef<number | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
@@ -52,7 +52,7 @@ export default function AudioCallPage() {
     getDevices();
     navigator.mediaDevices.addEventListener('devicechange', getDevices);
     return () => navigator.mediaDevices.removeEventListener('devicechange', getDevices);
-  }, []); // Only run once on mount, selectedDevice check is sufficient inside.
+  }); // Only run once on mount, selectedDevice check is sufficient inside.
 
   useEffect(() => {
     let canceled = false;
@@ -103,7 +103,7 @@ export default function AudioCallPage() {
         source.connect(analyzer);
         analyzer.fftSize = 256;
         const bufferLength = analyzer.frequencyBinCount;
-        const dataArray = new Uint8Array(bufferLength);
+        const dataArray: Uint8Array = new Uint8Array(bufferLength);
 
         audioContextRef.current = audioContext;
         analyzerRef.current = analyzer;
@@ -113,10 +113,7 @@ export default function AudioCallPage() {
           if (canceled || !canvasRef.current || !analyzerRef.current || !dataArrayRef.current)
             return;
           animationFrameRef.current = requestAnimationFrame(draw);
-          analyzerRef.current.getByteFrequencyData(
-            dataArrayRef.current as unknown as Uint8Array<ArrayBuffer>,
-          );
-
+          analyzerRef.current.getByteFrequencyData(dataArrayRef.current);
           const canvas = canvasRef.current;
           const ctx = canvas.getContext('2d');
           if (!ctx) return;

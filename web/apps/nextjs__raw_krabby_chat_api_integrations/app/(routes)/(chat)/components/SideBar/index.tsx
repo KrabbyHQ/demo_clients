@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import UserAccountMenu from '../UserAccountMenu';
-import { ChatsIcon, ContactsIcon, CallsIcon, ArchiveIcon, SettingsIcon } from '../../../../Icons';
+import { ChatsIcon, ContactsIcon, CallsIcon, ArchiveIcon, SettingsIcon } from '../../../../icons';
 
 function Sidebar() {
   return (

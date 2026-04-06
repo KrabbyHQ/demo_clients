@@ -4,8 +4,8 @@ import React from 'react';
 import Link from 'next/link';
 import { getInitials } from '../../../utils';
 import { useAppDispatch, useAppSelector } from '@/app/rtk-base/hooks';
-import { openModal } from '@/app/rtk-base/slices/new_chat_modal_slice';
-import { PlusIcon, SearchIcon } from '../../../../../Icons';
+import { openModal } from '@/app/rtk-base/slices/newChatModalSlice';
+import { PlusIcon, SearchIcon } from '../../../../../icons';
 
 interface ChatListProps {
   activeChat: {
